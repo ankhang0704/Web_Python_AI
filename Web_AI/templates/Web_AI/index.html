@@ -1,0 +1,53 @@
+{% extends "Web_AI/layout.html" %}
+{% block title %}
+Web AI
+{% endblock %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Image Captioning Demo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+        }
+        img {
+            max-width: 100%;
+            margin-top: 20px;
+        }
+        .caption {
+            margin-top: 15px;
+            font-size: 18px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Sinh chú thích từ ảnh</h2>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" name="image" required>
+        <button type="submit">Tải lên và dự đoán</button>
+    </form>
+
+    {% if image_url %}
+        <h3>Ảnh của bạn:</h3>
+        <img src="{{ image_url }}">
+    {% endif %}
+
+    {% if caption %}
+        <div class="caption">
+            <strong>Chú thích ảnh:</strong><br>
+            {{ caption }}
+        </div>
+    {% endif %}
+</div>
+</body>
+</html>
+{% endblock %}
