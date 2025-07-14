@@ -1,8 +1,380 @@
 {% extends "Web_AI/layout.html" %}
-{% block title %}
-Home
-{% endblock %}
-{% block content %}
-<p>Home page for the Visual Studio Code Django tutorial.</p>
 
+{% block title %}Dự án LocationAI - Dự đoán địa điểm du lịch Bình Thuận{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <!-- Hero Section -->
+    <div class="text-center mb-16">
+        <h1 class="text-4xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6">
+            Location
+            <span class="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                AI
+            </span>
+        </h1>
+        <p class="text-2xl text-gray-600 dark:text-gray-300 max-w-4xl mx-auto mb-8">
+            Dự án nghiên cứu ứng dụng AI để dự đoán địa điểm du lịch Bình Thuận từ hình ảnh
+        </p>
+        <div class="flex justify-center gap-4">
+            <a href="{% url 'index' %}" class="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-3 rounded-lg font-semibold hover:shadow-lg transition-all duration-200 transform hover:scale-105">
+                Thử ngay
+            </a>
+            <a href="#about" class="bg-white dark:bg-gray-800 text-gray-800 dark:text-white px-8 py-3 rounded-lg font-semibold border border-gray-300 dark:border-gray-600 hover:shadow-lg transition-all duration-200">
+                Tìm hiểu thêm
+            </a>
+        </div>
+    </div>
+
+    <!-- About Section -->
+    <div id="about" class="max-w-6xl mx-auto mb-16">
+        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden">
+            <div class="bg-gradient-to-r from-blue-600 to-purple-600 px-8 py-6">
+                <h2 class="text-3xl font-bold text-white">Giới thiệu dự án</h2>
+            </div>
+            <div class="p-8">
+                <div class="grid md:grid-cols-2 gap-8 mb-8">
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Mục tiêu dự án</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">
+                            LocationAI là một dự án nghiên cứu nhằm phát triển hệ thống AI có khả năng nhận diện và dự đoán
+                            chính xác các địa điểm du lịch nổi tiếng tại tỉnh Bình Thuận, Việt Nam từ hình ảnh.
+                        </p>
+                        <p class="text-gray-600 dark:text-gray-300">
+                            Dự án hướng tới việc hỗ trợ du khách trong việc khám phá và tìm hiểu về các điểm đến du lịch
+                            tại Bình Thuận một cách dễ dàng và tiện lợi.
+                        </p>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Công nghệ sử dụng</h3>
+                        <ul class="space-y-2 text-gray-600 dark:text-gray-300">
+                            <li class="flex items-center">
+                                <span class="w-2 h-2 bg-blue-600 rounded-full mr-3"></span>
+                                Machine Learning & Deep Learning
+                            </li>
+                            <li class="flex items-center">
+                                <span class="w-2 h-2 bg-blue-600 rounded-full mr-3"></span>
+                                Computer Vision
+                            </li>
+                            <li class="flex items-center">
+                                <span class="w-2 h-2 bg-blue-600 rounded-full mr-3"></span>
+                                Convolutional Neural Networks (CNN)
+                            </li>
+                            <li class="flex items-center">
+                                <span class="w-2 h-2 bg-blue-600 rounded-full mr-3"></span>
+                                Django Web Framework
+                            </li>
+                            <li class="flex items-center">
+                                <span class="w-2 h-2 bg-blue-600 rounded-full mr-3"></span>
+                                TensorFlow/PyTorch
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <div class="max-w-6xl mx-auto mb-16">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">Tính năng nổi bật</h2>
+            <p class="text-lg text-gray-600 dark:text-gray-300">Khám phá các tính năng mạnh mẽ của LocationAI</p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-8">
+            <!-- Feature 1 -->
+            <div class="feature-card bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-300">
+                <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center mb-4">
+                    <svg class="w-6 h-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Dự đoán nhanh chóng</h3>
+                <p class="text-gray-600 dark:text-gray-300">Xử lý hình ảnh và đưa ra kết quả dự đoán địa điểm chỉ trong vài giây</p>
+            </div>
+
+            <!-- Feature 2 -->
+            <div class="feature-card bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-300">
+                <div class="w-12 h-12 bg-green-100 dark:bg-green-900 rounded-lg flex items-center justify-center mb-4">
+                    <svg class="w-6 h-6 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Độ chính xác cao</h3>
+                <p class="text-gray-600 dark:text-gray-300">Sử dụng AI tiên tiến để đạt độ chính xác cao trong việc nhận diện địa điểm Bình Thuận</p>
+            </div>
+
+            <!-- Feature 3 -->
+            <div class="feature-card bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-300">
+                <div class="w-12 h-12 bg-purple-100 dark:bg-purple-900 rounded-lg flex items-center justify-center mb-4">
+                    <svg class="w-6 h-6 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Chuyên biệt Bình Thuận</h3>
+                <p class="text-gray-600 dark:text-gray-300">Tập trung vào các địa điểm du lịch nổi tiếng tại tỉnh Bình Thuận</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Binh Thuan Tourism -->
+    <div class="max-w-6xl mx-auto mb-16">
+        <div class="bg-gradient-to-r from-green-600 to-blue-600 rounded-2xl p-8 text-white">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold mb-4">Du lịch Bình Thuận</h2>
+                <p class="text-green-100 text-lg">Khám phá vẻ đẹp tự nhiên và văn hóa của vùng đất Bình Thuận</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Bãi biển đẹp</h3>
+                    <p class="text-green-100">Mũi Né, Phan Thiết với những bãi biển tuyệt đẹp</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Đồi cát</h3>
+                    <p class="text-green-100">Đồi cát bay Mũi Né - kỳ quan thiên nhiên độc đáo</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Di tích lịch sử</h3>
+                    <p class="text-green-100">Tháp Chăm, tháp Poshanu và các di tích văn hóa</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stats Section -->
+    <div class="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-8 text-white mb-16">
+        <div class="text-center mb-8">
+            <h2 class="text-3xl font-bold mb-4">Con số ấn tượng</h2>
+            <p class="text-blue-100">Thống kê về hiệu suất của LocationAI</p>
+        </div>
+
+        <div class="grid md:grid-cols-4 gap-8">
+            <div class="text-center">
+                <div class="text-4xl font-bold mb-2">93%</div>
+                <div class="text-blue-100">Độ chính xác</div>
+            </div>
+            <div class="text-center">
+                <div class="text-4xl font-bold mb-2">1.3s</div>
+                <div class="text-blue-100">Thời gian xử lý</div>
+            </div>
+            <div class="text-center">
+                <div class="text-4xl font-bold mb-2">100+</div>
+                <div class="text-blue-100">Địa điểm nhận diện</div>
+            </div>
+            <div class="text-center">
+                <div class="text-4xl font-bold mb-2">1K+</div>
+                <div class="text-blue-100">Hình ảnh đã xử lý</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- How it works -->
+    <div class="max-w-4xl mx-auto mb-16">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">Cách hoạt động</h2>
+            <p class="text-lg text-gray-600 dark:text-gray-300">Quy trình đơn giản để dự đoán địa điểm du lịch Bình Thuận</p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-8">
+            <!-- Step 1 -->
+            <div class="text-center">
+                <div class="w-16 h-16 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <span class="text-2xl font-bold text-blue-600 dark:text-blue-400">1</span>
+                </div>
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Tải lên hình ảnh</h3>
+                <p class="text-gray-600 dark:text-gray-300">Chọn hình ảnh địa điểm du lịch Bình Thuận từ thiết bị của bạn</p>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="text-center">
+                <div class="w-16 h-16 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <span class="text-2xl font-bold text-green-600 dark:text-green-400">2</span>
+                </div>
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">AI phân tích</h3>
+                <p class="text-gray-600 dark:text-gray-300">Hệ thống AI phân tích và nhận diện các đặc điểm của địa điểm</p>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="text-center">
+                <div class="w-16 h-16 bg-purple-100 dark:bg-purple-900 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <span class="text-2xl font-bold text-purple-600 dark:text-purple-400">3</span>
+                </div>
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Nhận kết quả</h3>
+                <p class="text-gray-600 dark:text-gray-300">Nhận được thông tin chi tiết về địa điểm du lịch Bình Thuận</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Popular Destinations -->
+    <div class="max-w-6xl mx-auto mb-16">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">Địa điểm nổi bật</h2>
+            <p class="text-lg text-gray-600 dark:text-gray-300">Những địa điểm du lịch nổi tiếng tại Bình Thuận mà AI có thể nhận diện</p>
+        </div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Destination 1 -->
+            <div class="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
+                <div class="h-48 bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center">
+                    <svg class="w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064"></path>
+                    </svg>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Bãi biển Mũi Né</h3>
+                    <p class="text-gray-600 dark:text-gray-300">Bãi biển tuyệt đẹp với cát trắng mịn và nước biển trong xanh</p>
+                </div>
+            </div>
+
+            <!-- Destination 2 -->
+            <div class="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
+                <div class="h-48 bg-gradient-to-br from-yellow-400 to-orange-500 flex items-center justify-center">
+                    <svg class="w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
+                    </svg>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Đồi cát bay</h3>
+                    <p class="text-gray-600 dark:text-gray-300">Kỳ quan thiên nhiên với cát vàng bay lượn theo gió</p>
+                </div>
+            </div>
+
+            <!-- Destination 3 -->
+            <div class="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
+                <div class="h-48 bg-gradient-to-br from-red-400 to-red-600 flex items-center justify-center">
+                    <svg class="w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                    </svg>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Tháp Chăm</h3>
+                    <p class="text-gray-600 dark:text-gray-300">Di tích lịch sử văn hóa Chăm cổ với kiến trúc độc đáo</p>
+                </div>
+            </div>
+
+            <!-- Destination 4 -->
+            <div class="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
+                <div class="h-48 bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center">
+                    <svg class="w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                    </svg>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Suối Tiên</h3>
+                    <p class="text-gray-600 dark:text-gray-300">Suối nước trong vắt giữa núi rừng xanh mướt</p>
+                </div>
+            </div>
+
+            <!-- Destination 5 -->
+            <div class="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
+                <div class="h-48 bg-gradient-to-br from-purple-400 to-purple-600 flex items-center justify-center">
+                    <svg class="w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                    </svg>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Lâu đài rượu vang</h3>
+                    <p class="text-gray-600 dark:text-gray-300">Điểm đến độc đáo với kiến trúc châu Âu giữa lòng Việt Nam</p>
+                </div>
+            </div>
+
+            <!-- Destination 6 -->
+            <div class="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
+                <div class="h-48 bg-gradient-to-br from-indigo-400 to-indigo-600 flex items-center justify-center">
+                    <svg class="w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 4a10 10 0 100 16 10 10 0 000-16zm0 0V2a2 2 0 012-2h4a2 2 0 012 2v2m-6 12a2 2 0 100-4 2 2 0 000 4z"></path>
+                    </svg>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Hải đăng Kê Gà</h3>
+                    <p class="text-gray-600 dark:text-gray-300">Hải đăng cổ nhất Việt Nam với view biển tuyệt đẹp</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Technology Stack -->
+    <div class="max-w-6xl mx-auto mb-16">
+        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden">
+            <div class="bg-gradient-to-r from-gray-800 to-gray-900 px-8 py-6">
+                <h2 class="text-3xl font-bold text-white">Công nghệ & Phương pháp</h2>
+            </div>
+            <div class="p-8">
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Mô hình AI</h3>
+                        <ul class="space-y-3 text-gray-600 dark:text-gray-300">
+                            <li class="flex items-start">
+                                <span class="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                                <span>Convolutional Neural Network (CNN) để trích xuất đặc trưng hình ảnh</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                                <span>Transfer Learning với các mô hình pre-trained như ResNet, VGG</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                                <span>Data Augmentation để tăng cường dữ liệu huấn luyện</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                                <span>Fine-tuning cho các địa điểm đặc trưng của Bình Thuận</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Hệ thống Backend</h3>
+                        <ul class="space-y-3 text-gray-600 dark:text-gray-300">
+                            <li class="flex items-start">
+                                <span class="w-2 h-2 bg-green-600 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                                <span>Django framework cho web application</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="w-2 h-2 bg-green-600 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                                <span>TensorFlow/PyTorch cho model inference</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="w-2 h-2 bg-green-600 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                                <span>OpenCV cho xử lý hình ảnh</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="w-2 h-2 bg-green-600 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                                <span>RESTful API cho tích hợp dễ dàng</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Call to Action -->
+    <div class="text-center mb-16">
+        <div class="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-8 text-white">
+            <h2 class="text-3xl font-bold mb-4">Sẵn sàng khám phá?</h2>
+            <p class="text-xl mb-8">Hãy thử nghiệm LocationAI ngay hôm nay và khám phá những địa điểm tuyệt vời tại Bình Thuận!</p>
+            <a href="{% url 'index' %}" class="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:shadow-lg transition-all duration-200 transform hover:scale-105 inline-block">
+                Bắt đầu ngay
+            </a>
+        </div>
+    </div>
+</div>
 {% endblock %}

@@ -1,7 +1,224 @@
 {% extends "Web_AI/layout.html" %}
-{% block title %}
-About
-{% block content %}
-<p>About page for the Visual Studio Code Django tutorial.</p>{% endblock %}
 
+{% block title %}Giới thiệu - LocationAI{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <!-- Hero Section -->
+    <div class="text-center mb-16">
+        <div class="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-12 text-white">
+            <h1 class="text-4xl md:text-5xl font-bold mb-6">Về LocationAI</h1>
+            <p class="text-xl text-blue-100 max-w-3xl mx-auto">
+                Chúng tôi tạo ra những giải pháp AI tiên tiến để giúp bạn khám phá và nhận diện thế giới xung quanh thông qua hình ảnh
+            </p>
+        </div>
+    </div>
+
+    <!-- Mission Section -->
+    <div class="max-w-4xl mx-auto mb-16">
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+            <div>
+                <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">Sứ mệnh của chúng tôi</h2>
+                <p class="text-lg text-gray-600 dark:text-gray-300 mb-6">
+                    LocationAI được sinh ra với mục tiêu làm cho việc nhận diện địa điểm trở nên dễ dàng và chính xác hơn bao giờ hết. Chúng tôi tin rằng công nghệ AI có thể giúp con người hiểu rõ hơn về thế giới xung quanh.
+                </p>
+                <p class="text-lg text-gray-600 dark:text-gray-300 mb-6">
+                    Với đội ngũ chuyên gia AI và computer vision, chúng tôi không ngừng phát triển và cải tiến để mang đến trải nghiệm tốt nhất cho người dùng.
+                </p>
+                <div class="flex flex-wrap gap-4">
+                    <span class="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-4 py-2 rounded-full text-sm font-semibold">AI Technology</span>
+                    <span class="bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-4 py-2 rounded-full text-sm font-semibold">Computer Vision</span>
+                    <span class="bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 px-4 py-2 rounded-full text-sm font-semibold">Machine Learning</span>
+                </div>
+            </div>
+            <div>
+                <div class="bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 rounded-2xl p-8 border dark:border-gray-700">
+                    <svg class="w-24 h-24 text-blue-600 dark:text-blue-400 mx-auto mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                    </svg>
+                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white text-center mb-4">Công nghệ tiên tiến</h3>
+                    <p class="text-gray-600 dark:text-gray-300 text-center">
+                        Sử dụng các mô hình deep learning hiện đại để phân tích và nhận diện địa điểm với độ chính xác cao
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Values Section -->
+    <div class="max-w-6xl mx-auto mb-16">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">Giá trị cốt lõi</h2>
+            <p class="text-lg text-gray-600 dark:text-gray-300">Những nguyên tắc định hướng hoạt động của chúng tôi</p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-8">
+            <!-- Value 1 -->
+            <div class="bg-white dark:bg-gray-800 rounded-xl p-8 shadow-lg hover:shadow-xl dark:shadow-gray-900/20 dark:hover:shadow-gray-900/30 transition-shadow duration-300 border dark:border-gray-700">
+                <div class="w-16 h-16 bg-blue-100 dark:bg-blue-900/50 rounded-lg flex items-center justify-center mb-6">
+                    <svg class="w-8 h-8 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Chính xác</h3>
+                <p class="text-gray-600 dark:text-gray-300">
+                    Chúng tôi cam kết mang đến độ chính xác cao nhất trong việc dự đoán và nhận diện địa điểm từ hình ảnh.
+                </p>
+            </div>
+
+            <!-- Value 2 -->
+            <div class="bg-white dark:bg-gray-800 rounded-xl p-8 shadow-lg hover:shadow-xl dark:shadow-gray-900/20 dark:hover:shadow-gray-900/30 transition-shadow duration-300 border dark:border-gray-700">
+                <div class="w-16 h-16 bg-green-100 dark:bg-green-900/50 rounded-lg flex items-center justify-center mb-6">
+                    <svg class="w-8 h-8 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Nhanh chóng</h3>
+                <p class="text-gray-600 dark:text-gray-300">
+                    Tốc độ xử lý nhanh giúp bạn nhận được kết quả trong thời gian ngắn nhất, tối ưu hóa trải nghiệm người dùng.
+                </p>
+            </div>
+
+            <!-- Value 3 -->
+            <div class="bg-white dark:bg-gray-800 rounded-xl p-8 shadow-lg hover:shadow-xl dark:shadow-gray-900/20 dark:hover:shadow-gray-900/30 transition-shadow duration-300 border dark:border-gray-700">
+    <div class="w-16 h-16 bg-purple-100 dark:bg-purple-900/50 rounded-lg flex items-center justify-center mb-6">
+        <svg class="w-8 h-8 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4C7.58 4 4 5.79 4 8v8c0 2.21 3.58 4 8 4s8-1.79 8-4V8c0-2.21-3.58-4-8-4zm0 0v4m0 8v4m0-8c4.42 0 8-1.79 8-4m-8 4c-4.42 0-8-1.79-8-4" />
+        </svg>
+    </div>
+    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Dữ liệu lớn</h3>
+    <p class="text-gray-600 dark:text-gray-300">
+        Có hơn 1k+ ảnh địa điểm dữ liệu có thể nhận diện
+    </p>
+</div>
+
+        </div>
+    </div>
+
+    <!-- Technology Section -->
+    <div class="max-w-4xl mx-auto mb-16">
+        <div class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-8 border dark:border-gray-700">
+            <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-8 text-center">Công nghệ sử dụng</h2>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Tech Item 1 -->
+                <div class="flex items-start space-x-4">
+                    <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900/50 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <svg class="w-6 h-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Deep Learning</h3>
+                        <p class="text-gray-600 dark:text-gray-300">Sử dụng mạng neural sâu để phân tích và nhận diện các đặc điểm của địa điểm trong hình ảnh.</p>
+                    </div>
+                </div>
+
+                <!-- Tech Item 2 -->
+                <div class="flex items-start space-x-4">
+                    <div class="w-12 h-12 bg-green-100 dark:bg-green-900/50 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <svg class="w-6 h-6 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Computer Vision</h3>
+                        <p class="text-gray-600 dark:text-gray-300">Công nghệ thị giác máy tính tiên tiến để hiểu và diễn giải nội dung hình ảnh một cách chính xác.</p>
+                    </div>
+                </div>
+
+                <!-- Tech Item 3 -->
+                <div class="flex items-start space-x-4">
+                    <div class="w-12 h-12 bg-purple-100 dark:bg-purple-900/50 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <svg class="w-6 h-6 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Cloud Computing</h3>
+                        <p class="text-gray-600 dark:text-gray-300">Hạ tầng đám mây mạnh mẽ đảm bảo tốc độ xử lý nhanh và khả năng mở rộng linh hoạt.</p>
+                    </div>
+                </div>
+
+                <!-- Tech Item 4 -->
+                <div class="flex items-start space-x-4">
+                    <div class="w-12 h-12 bg-orange-100 dark:bg-orange-900/50 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <svg class="w-6 h-6 text-orange-600 dark:text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Big Data</h3>
+                        <p class="text-gray-600 dark:text-gray-300">Xử lý và phân tích dữ liệu lớn để cải thiện độ chính xác của mô hình AI liên tục.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Team Section -->
+    <div class="max-w-4xl mx-auto mb-16">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">Đội ngũ phát triển</h2>
+            <p class="text-lg text-gray-600 dark:text-gray-300">Những người đứng sau LocationAI</p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-8">
+            <!-- Team Member 1 -->
+            <div class="text-center bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg hover:shadow-xl dark:shadow-gray-900/20 dark:hover:shadow-gray-900/30 transition-shadow duration-300 border dark:border-gray-700">
+                <div class="w-24 h-24 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full mx-auto mb-4 flex items-center justify-center">
+                    <span class="text-white font-bold text-2xl">AI</span>
+                </div>
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">AI Research Team</h3>
+                <p class="text-gray-600 dark:text-gray-300 mb-4">Chuyên gia về Machine Learning và Deep Learning</p>
+                <div class="flex justify-center space-x-2">
+                    <span class="bg-blue-100 dark:bg-blue-900/50 text-blue-800 dark:text-blue-200 px-3 py-1 rounded-full text-xs">Python</span>
+                    <span class="bg-green-100 dark:bg-green-900/50 text-green-800 dark:text-green-200 px-3 py-1 rounded-full text-xs">TensorFlow</span>
+                </div>
+            </div>
+
+            <!-- Team Member 2 -->
+            <div class="text-center bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg hover:shadow-xl dark:shadow-gray-900/20 dark:hover:shadow-gray-900/30 transition-shadow duration-300 border dark:border-gray-700">
+                <div class="w-24 h-24 bg-gradient-to-r from-green-500 to-blue-500 rounded-full mx-auto mb-4 flex items-center justify-center">
+                    <span class="text-white font-bold text-2xl">CV</span>
+                </div>
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Computer Vision Team</h3>
+                <p class="text-gray-600 dark:text-gray-300 mb-4">Chuyên gia về xử lý hình ảnh và thị giác máy tính</p>
+                <div class="flex justify-center space-x-2">
+                    <span class="bg-purple-100 dark:bg-purple-900/50 text-purple-800 dark:text-purple-200 px-3 py-1 rounded-full text-xs">OpenCV</span>
+                    <span class="bg-orange-100 dark:bg-orange-900/50 text-orange-800 dark:text-orange-200 px-3 py-1 rounded-full text-xs">PyTorch</span>
+                </div>
+            </div>
+
+            <!-- Team Member 3 -->
+            <div class="text-center bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg hover:shadow-xl dark:shadow-gray-900/20 dark:hover:shadow-gray-900/30 transition-shadow duration-300 border dark:border-gray-700">
+                <div class="w-24 h-24 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full mx-auto mb-4 flex items-center justify-center">
+                    <span class="text-white font-bold text-2xl">WD</span>
+                </div>
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Web Development Team</h3>
+                <p class="text-gray-600 dark:text-gray-300 mb-4">Chuyên gia về phát triển web và giao diện người dùng</p>
+                <div class="flex justify-center space-x-2">
+                    <span class="bg-yellow-100 dark:bg-yellow-900/50 text-yellow-800 dark:text-yellow-200 px-3 py-1 rounded-full text-xs">Django</span>
+                    <span class="bg-blue-100 dark:bg-blue-900/50 text-blue-800 dark:text-blue-200 px-3 py-1 rounded-full text-xs">React</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CTA Section -->
+    <div class="max-w-4xl mx-auto">
+        <div class="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-8 text-white text-center">
+            <h2 class="text-3xl font-bold mb-4">Sẵn sàng khám phá?</h2>
+            <p class="text-xl text-blue-100 mb-8">
+                Hãy thử nghiệm LocationAI ngay hôm nay và khám phá sức mạnh của AI trong việc nhận diện địa điểm
+            </p>
+            <a href="{% url 'home' %}"
+               class="bg-white text-blue-600 font-semibold py-3 px-8 rounded-lg hover:bg-gray-100 transition-colors duration-200 inline-block">
+                Bắt đầu ngay
+            </a>
+        </div>
+    </div>
+</div>
 {% endblock %}

@@ -1,53 +1,250 @@
 {% extends "Web_AI/layout.html" %}
-{% block title %}
-Web AI
-{% endblock %}
+
+{% block title %}Dự đoán Địa điểm từ Hình ảnh - LocationAI{% endblock %}
+
 {% block content %}
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Image Captioning Demo</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 40px;
-        }
-        .container {
-            max-width: 600px;
-            margin: auto;
-        }
-        img {
-            max-width: 100%;
-            margin-top: 20px;
-        }
-        .caption {
-            margin-top: 15px;
-            font-size: 18px;
-            color: #333;
-        }
-    </style>
-</head>
-<body>
-<div class="container">
-    <h2>Sinh chú thích từ ảnh</h2>
-    <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        <input type="file" name="image" required>
-        <button type="submit">Tải lên và dự đoán</button>
-    </form>
-
-    {% if image_url %}
-        <h3>Ảnh của bạn:</h3>
-        <img src="{{ image_url }}">
-    {% endif %}
-
-    {% if caption %}
-        <div class="caption">
-            <strong>Chú thích ảnh:</strong><br>
-            {{ caption }}
+<div class="container mx-auto px-4 py-8">
+    <!-- Hero Section -->
+    <div class="text-center mb-12">
+        <h1 class="text-4xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6">
+            Dự đoán
+            <span class="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                Địa điểm
+            </span>
+            từ Hình ảnh
+        </h1>
+        <p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-8">
+            Sử dụng công nghệ AI tiên tiến để nhận diện và dự đoán địa điểm từ hình ảnh của bạn với độ chính xác cao
+        </p>
+        <div class="flex justify-center gap-4">
+            <a href="{% url 'home' %}" class="bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200 font-semibold py-3 px-6 rounded-lg transition-all duration-200">
+                Tìm hiểu thêm
+            </a>
         </div>
+    </div>
+
+    <!-- Upload Section -->
+    <div class="max-w-4xl mx-auto mb-12">
+        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden">
+            <div class="p-8">
+                <!-- Form -->
+                <form method="POST" enctype="multipart/form-data" id="uploadForm" class="space-y-6">
+                    {% csrf_token %}
+
+                    <!-- File Upload Area -->
+                    <div class="upload-area border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-xl p-8 text-center hover:border-blue-500 dark:hover:border-blue-400 transition-colors duration-200 cursor-pointer"
+                         onclick="document.getElementById('imageInput').click()">
+                        <input type="file" id="imageInput" name="image" accept="image/*" required class="hidden">
+
+                        <div class="upload-content">
+                            <svg class="w-16 h-16 text-gray-400 dark:text-gray-500 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                            </svg>
+                            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Chọn hình ảnh để dự đoán</h3>
+                            <p class="text-gray-600 dark:text-gray-300 mb-4">Kéo thả hoặc nhấp để chọn file</p>
+                            <p class="text-sm text-gray-500 dark:text-gray-400">PNG, JPG, JPEG (tối đa 10MB)</p>
+                        </div>
+                    </div>
+
+                    <!-- Selected Image Preview -->
+                    <div id="imagePreview" class="hidden">
+                        <div class="bg-gray-50 dark:bg-gray-700 rounded-xl p-6">
+                            <h4 class="font-semibold text-gray-900 dark:text-white mb-4">Hình ảnh đã chọn:</h4>
+                            <div class="flex items-center justify-center">
+                                <img id="previewImg" class="max-w-full max-h-96 rounded-lg shadow-md" alt="Preview">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="text-center">
+                        <button type="submit" id="submitBtn" disabled
+                                class="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed text-white font-semibold py-3 px-8 rounded-lg transition-all duration-200 transform hover:scale-105 shadow-lg">
+                            <span class="submit-text">
+                                <svg class="w-5 h-5 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                </svg>
+                                Dự đoán địa điểm
+                            </span>
+                            <span class="loading-text hidden">
+                                <svg class="animate-spin w-5 h-5 inline mr-2" fill="none" viewBox="0 0 24 24">
+                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                </svg>
+                                Đang xử lý...
+                            </span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Results Section -->
+    {% if image_url %}
+    <div class="max-w-4xl mx-auto mb-12">
+        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden">
+            <div class="bg-gradient-to-r from-blue-600 to-purple-600 px-8 py-6">
+                <h2 class="text-2xl font-bold text-white">Kết quả dự đoán</h2>
+            </div>
+
+            <div class="p-8">
+                <div class="mb-8">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Hình ảnh đã tải lên:</h3>
+                    <div class="flex justify-center">
+                        <img src="{{ image_url }}" class="max-w-full max-h-96 rounded-lg shadow-md" alt="Uploaded image">
+                    </div>
+                </div>
+
+                {% if caption %}
+                <div class="result-section bg-gradient-to-r from-green-50 to-blue-50 dark:from-green-900/20 dark:to-blue-900/20 rounded-xl p-6">
+                    <div class="flex items-start space-x-4">
+                        <div class="flex-shrink-0">
+                            <div class="w-10 h-10 bg-green-500 rounded-lg flex items-center justify-center">
+                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="flex-1">
+                            <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Địa điểm dự đoán:</h4>
+                            <p class="text-gray-700 dark:text-gray-300 text-lg leading-relaxed">{{ caption }}</p>
+                        </div>
+                    </div>
+                </div>
+                {% else %}
+                <div class="result-section bg-gradient-to-r from-yellow-50 to-orange-50 dark:from-yellow-900/20 dark:to-orange-900/20 rounded-xl p-6">
+                    <div class="flex items-start space-x-4">
+                        <div class="flex-shrink-0">
+                            <div class="w-10 h-10 bg-yellow-500 rounded-lg flex items-center justify-center">
+                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.664-.833-2.464 0L3.348 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="flex-1">
+                            <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Thông báo:</h4>
+                            <p class="text-gray-700 dark:text-gray-300 text-lg leading-relaxed">Không thể dự đoán được địa điểm từ hình ảnh này. Vui lòng thử lại với hình ảnh khác.</p>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- Action Buttons -->
+                <div class="flex flex-col sm:flex-row gap-4 mt-6">
+                    <button onclick="resetFormWithoutReload()"
+                            class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-lg transition-all duration-200">
+                        Dự đoán hình ảnh khác
+                    </button>
+                    <button onclick="shareResult()"
+                            class="bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200 font-semibold py-2 px-6 rounded-lg transition-all duration-200">
+                        Chia sẻ kết quả
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
     {% endif %}
 </div>
-</body>
-</html>
+
+<script>
+    function resetFormWithoutReload() {
+    // Ẩn kết quả
+    const resultsSection = document.querySelector('.result-section');
+    if (resultsSection) {
+        resultsSection.parentElement.style.display = 'none';
+    }
+
+    // Reset form
+    document.getElementById('uploadForm').reset();
+
+    // Ẩn preview
+    document.getElementById('imagePreview').classList.add('hidden');
+
+    // Disable submit button
+    document.getElementById('submitBtn').disabled = true;
+
+    // Reset button text
+    const submitBtn = document.getElementById('submitBtn');
+    const submitText = submitBtn.querySelector('.submit-text');
+    const loadingText = submitBtn.querySelector('.loading-text');
+    submitText.classList.remove('hidden');
+    loadingText.classList.add('hidden');
+
+    // Scroll to top
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Image upload functionality
+document.getElementById('imageInput').addEventListener('change', function(event) {
+    const file = event.target.files[0];
+    const previewDiv = document.getElementById('imagePreview');
+    const previewImg = document.getElementById('previewImg');
+    const submitBtn = document.getElementById('submitBtn');
+
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            previewImg.src = e.target.result;
+            previewDiv.classList.remove('hidden');
+            submitBtn.disabled = false;
+        };
+        reader.readAsDataURL(file);
+    }
+});
+
+// Form submission handling
+document.getElementById('uploadForm').addEventListener('submit', function(e) {
+    const submitBtn = document.getElementById('submitBtn');
+    const submitText = submitBtn.querySelector('.submit-text');
+    const loadingText = submitBtn.querySelector('.loading-text');
+
+    // Show loading state
+    submitText.classList.add('hidden');
+    loadingText.classList.remove('hidden');
+    submitBtn.disabled = true;
+});
+
+// Share result function
+function shareResult() {
+    if (navigator.share) {
+        navigator.share({
+            title: 'Kết quả dự đoán từ LocationAI',
+            text: 'Tôi vừa sử dụng LocationAI để dự đoán địa điểm từ hình ảnh!',
+            url: window.location.href
+        });
+    } else {
+        const url = window.location.href;
+        navigator.clipboard.writeText(url).then(() => {
+            alert('Đã sao chép link vào clipboard!');
+        });
+    }
+}
+
+// Drag and drop functionality
+const uploadArea = document.querySelector('.upload-area');
+
+uploadArea.addEventListener('dragover', function(e) {
+    e.preventDefault();
+    uploadArea.classList.add('border-blue-500');
+});
+
+uploadArea.addEventListener('dragleave', function(e) {
+    e.preventDefault();
+    uploadArea.classList.remove('border-blue-500');
+});
+
+uploadArea.addEventListener('drop', function(e) {
+    e.preventDefault();
+    uploadArea.classList.remove('border-blue-500');
+
+    const files = e.dataTransfer.files;
+    if (files.length > 0) {
+        const imageInput = document.getElementById('imageInput');
+        imageInput.files = files;
+        imageInput.dispatchEvent(new Event('change'));
+    }
+});
+</script>
 {% endblock %}
