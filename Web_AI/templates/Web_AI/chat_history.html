@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}Lịch sử tìm kiếm{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold mb-6 text-gray-800 border-b pb-2">Lịch sử hội thoại</h1>
+
+    {% if chat_sessions %}
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {% for session in chat_sessions %}
+        <!-- Mỗi phiên chat là một cái thẻ có thể click -->
+        <a href="{% url 'session_detail' session.id %}"
+            class="block bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 p-6">
+            <div class="flex flex-col h-full">
+                <!-- Tiêu đề của phiên chat -->
+                <h2 class="text-xl font-semibold text-gray-700 mb-2">
+                    {{ session.title|default:"Cuộc hội thoại" }}
+                </h2>
+
+                <!-- Hiển thị tin nhắn cuối cùng (nếu có) -->
+                {% with last_message=session.contents.last %}
+                {% if last_message %}
+                <p class="text-gray-500 text-sm truncate">
+                    <strong>Bạn:</strong> {{ last_message.user_message|truncatewords:10 }}
+                </p>
+                <p class="text-gray-600 text-sm mt-1 truncate">
+                    <strong>Bot:</strong> {{ last_message.ai_response|truncatewords:10 }}
+                </p>
+                {% else %}
+                <p class="text-gray-500 italic">Chưa có tin nhắn nào.</p>
+                {% endif %}
+                {% endwith %}
+
+                <!-- Thời gian bắt đầu (ở cuối thẻ) -->
+                <div class="mt-auto pt-4 text-right">
+                    <span class="text-xs text-gray-400">
+                        {{ session.start_time|date:"H:i, d/m/Y" }}
+                    </span>
+                </div>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+    {% else %}
+    <!-- Thông báo nếu chưa có lịch sử chat -->
+    <div class="text-center py-16">
+        <p class="text-gray-500 text-lg">Bạn chưa có cuộc hội thoại nào.</p>
+        <a href="{% url 'index' %}"
+            class="mt-4 inline-block bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-600">
+            Bắt đầu Chat ngay
+        </a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

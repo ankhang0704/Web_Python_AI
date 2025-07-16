@@ -58,7 +58,7 @@ ROOT_URLCONF = 'web_project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -121,7 +121,14 @@ USE_TZ = True
 STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'static_collected'
 
+LOGIN_URL = '/accounts/login/'  # Đường dẫn đến trang đăng nhập
+# Chuyển hướng đến URL này sau khi đăng nhập thành công
+LOGIN_REDIRECT_URL = '/'  
+# Chuyển hướng đến URL này sau khi đăng xuất
+LOGOUT_REDIRECT_URL = '/' 
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+

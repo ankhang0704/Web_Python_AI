@@ -1,0 +1,13 @@
+{% extends 'base.html' %}  <!-- Giả sử bạn có một file base.html -->
+
+{% block title %}Đăng ký{% endblock %}
+
+{% block content %}
+  <h2>Đăng ký tài khoản</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}  <!-- Dòng này sẽ tự động render các trường của form -->
+    <button type="submit">Đăng ký</button>
+  </form>
+  <p>Đã có tài khoản? <a href="{% url 'login' %}">Đăng nhập ngay</a></p>
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Chi tiết hội thoại: {{ session.title|default:"Không có tiêu đề" }}{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <!-- Nút quay lại trang lịch sử -->
+    <a href="{% url 'chat_history' %}" class="text-blue-500 hover:underline mb-6 inline-block">
+        ← Quay lại Lịch sử
+    </a>
+
+    <!-- Tiêu đề của phiên chat -->
+    <h1 class="text-3xl font-bold mb-2 text-gray-800">{{ session.title|default:"Cuộc hội thoại" }}</h1>
+    <p class="text-sm text-gray-500 mb-8">Bắt đầu lúc: {{ session.start_time|date:"H:i, d/m/Y" }}</p>
+
+    <!-- Khung hiển thị tin nhắn -->
+    <div class="space-y-6">
+        {% for message in messages %}
+        <div class="message-group">
+            <!-- Tin nhắn của người dùng -->
+            <div class="flex justify-end mb-2">
+                <div class="bg-blue-500 text-white p-3 rounded-lg max-w-lg">
+                    <p class="font-bold">Bạn</p>
+                    <p>{{ message.user_message }}</p>
+                </div>
+            </div>
+
+            <!-- Tin nhắn của Bot -->
+            <div class="flex justify-start">
+                <div class="bg-gray-200 text-gray-800 p-3 rounded-lg max-w-lg">
+                    <p class="font-bold">Trợ lý AI</p>
+
+                    <!-- Hiển thị caption nếu có -->
+                    {% if message.image_caption %}
+                    <p class="italic mb-2"><strong>Kết quả nhận diện ảnh:</strong> {{ message.image_caption }}</p>
+                    {% endif %}
+
+                    <!-- Hiển thị câu trả lời của bot -->
+                    <p>{{ message.ai_response }}</p>
+
+                    <p class="text-right text-xs text-gray-500 mt-2">
+                        {{ message.timestamp|date:"H:i" }}
+                    </p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
