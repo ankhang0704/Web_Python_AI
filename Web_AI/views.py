@@ -8,7 +8,7 @@
 import os
 import json
 import logging
-
+import urllib.parse
 logger = logging.getLogger(__name__)
 
 from django.shortcuts import render, redirect, get_object_or_404
@@ -23,9 +23,12 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 
+
+
 from .ai_images import generate_caption, encode_image
 from .ai_service import predict
 from .models import ChatSession, ChatMessage
+
 
 
 @login_required
@@ -91,9 +94,8 @@ def predict_location(request):
             
             # Gọi hàm AI để dự đoán
             prediction = generate_caption(photo)
-            
-            # Tạo URL cho hình ảnh
-            image_url = f"{settings.MEDIA_URL}chat_uploads/{unique_filename}"
+
+
             
             # Log để debug
             logger.info(f"Image uploaded: {unique_filename}")
@@ -117,10 +119,8 @@ def predict_location(request):
                 ai_response=f"Tôi nhận diện được đây là: {prediction}. Bạn muốn hỏi gì thêm?", # Câu trả lời của bot
             )
 
-
             return JsonResponse({
                 'prediction': prediction,
-                'image_url': image_url,
                 'type': 'image_prediction',
                 'session_id': new_session.id
             })
@@ -261,18 +261,18 @@ def chat_session_detail(request, session_id):
     except ChatSession.DoesNotExist:
         return HttpResponse("Phiên chat không tồn tại.", status=404)
     
-# trong views.py
-@login_required
-def session_detail(request, session_id):
-    try:
-        # Đảm bảo người dùng chỉ xem được session của chính họ
-        session = ChatSession.objects.get(id=session_id, user=request.user)
-        # Lấy tất cả tin nhắn trong session đó, sắp xếp theo thời gian
-        messages = session.contents.all().order_by('timestamp')
-        return render(request, 'Web_AI/session_detail.html', {'session': session, 'messages': messages})
-    except ChatSession.DoesNotExist:
-        from django.http import Http404
-        raise Http404("Không tìm thấy phiên chat.")
+# # trong views.py
+# @login_required
+# def session_detail(request, session_id):
+#     try:
+#         # Đảm bảo người dùng chỉ xem được session của chính họ
+#         session = ChatSession.objects.get(id=session_id, user=request.user)
+#         # Lấy tất cả tin nhắn trong session đó, sắp xếp theo thời gian
+#         messages = session.contents.all().order_by('timestamp')
+#         return render(request, 'Web_AI/session_detail.html', {'session': session, 'messages': messages})
+#     except ChatSession.DoesNotExist:
+#         from django.http import Http404
+#         raise Http404("Không tìm thấy phiên chat.")
     
 @login_required
 def session_detail(request, session_id):

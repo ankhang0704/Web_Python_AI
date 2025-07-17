@@ -51,4 +51,3 @@ def generate_caption(photo):
             break
     final = in_text.split()[1:-1]
     return ' '.join(final)
-
