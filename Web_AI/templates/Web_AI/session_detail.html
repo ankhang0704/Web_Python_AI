@@ -113,6 +113,7 @@
                                 </div>
 
                                 <!-- Image Caption (if exists) -->
+                                <!-- Image Caption (if exists) -->
                                 {% if message.image_caption %}
                                 <div
                                     class="mb-3 p-3 bg-blue-50 dark:bg-blue-900 bg-opacity-50 rounded-lg border-l-4 border-blue-500">
@@ -126,8 +127,8 @@
                                         <span class="text-sm font-medium text-blue-800 dark:text-blue-200">Kết quả nhận
                                             diện ảnh:</span>
                                     </div>
-                                    <p class="text-sm text-blue-700 dark:text-blue-300 italic">{{ message.image_caption
-                                        }}</p>
+                                    <p class="text-sm text-blue-700 dark:text-blue-300 italic">{{
+                                        message.image_caption|safe }}</p>
                                 </div>
                                 {% endif %}
 

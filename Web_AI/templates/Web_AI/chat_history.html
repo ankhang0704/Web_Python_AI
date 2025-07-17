@@ -3,88 +3,218 @@
 {% block title %}Lịch sử tìm kiếm{% endblock %}
 
 {% block content %}
-<div class="container mx-auto px-4 py-8">
-    <h1 class="text-3xl font-bold mb-6 text-gray-800 border-b pb-2">Lịch sử hội thoại</h1>
-
-    <!-- NÚT XÓA TẤT CẢ -->
-    {% if chat_sessions %}
-    <form action="{% url 'delete_all_history' %}" method="post"
-        onsubmit="return confirm('Bạn có chắc chắn muốn xóa TOÀN BỘ lịch sử không? Hành động này không thể hoàn tác.');">
-        {% csrf_token %}
-        <button type="submit"
-            class="bg-red-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-red-700 transition-colors text-sm">
-            Xóa tất cả
-        </button>
-    </form>
-    {% endif %}
-</div>
-<!-- HIỂN THỊ THÔNG BÁO (TỪ MESSAGES FRAMEWORK) -->
-{% if messages %}
-<ul class="messages mb-4">
-    {% for message in messages %}
-    <li{% if message.tags %} class="{{ message.tags }} p-4 rounded-lg 
-                        {% if message.tags == 'success' %}bg-green-100 text-green-800
-                        {% elif message.tags == 'error' %}bg-red-100 text-red-800
-                        {% else %}bg-blue-100 text-blue-800{% endif %}" {% endif %}>{{ message }}</li>
-        {% endfor %}
-</ul>
-{% endif %}
-<!-- HIỂN THỊ DANH SÁCH CÁC PHIÊN CHAT -->
-{% if chat_sessions %}
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-    {% for session in chat_sessions %}
-    <!-- Mỗi phiên chat là một cái thẻ có thể click -->
-    <a href="{% url 'session_detail' session.id %}"
-        class="block bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 p-6">
-        <div class="flex flex-col h-full">
-            <!-- Tiêu đề của phiên chat -->
-            <h2 class="text-xl font-semibold text-gray-700 mb-2">
-                {{ session.title|default:"Cuộc hội thoại" }}
-            </h2>
-
-            <!-- Hiển thị tin nhắn cuối cùng (nếu có) -->
-            {% with last_message=session.contents.last %}
-            {% if last_message %}
-            <p class="text-gray-500 text-sm truncate">
-                <strong>Bạn:</strong> {{ last_message.user_message|truncatewords:10 }}
-            </p>
-            <p class="text-gray-600 text-sm mt-1 truncate">
-                <strong>Bot:</strong> {{ last_message.ai_response|truncatewords:10 }}
-            </p>
-            {% else %}
-            <p class="text-gray-500 italic">Chưa có tin nhắn nào.</p>
-            {% endif %}
-            {% endwith %}
-
-            <!-- Thời gian bắt đầu (ở cuối thẻ) -->
-            <div class="mt-auto pt-4 text-right">
-                <span class="text-xs text-gray-400">
-                    {{ session.start_time|date:"H:i, d/m/Y" }}
-                </span>
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <!-- Header Section -->
+    <div class="mb-8">
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+            <div class="mb-4 sm:mb-0">
+                <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">Lịch sử hội thoại</h1>
+                <p class="text-gray-600 dark:text-gray-400">Quản lý và xem lại các cuộc hội thoại của bạn</p>
             </div>
-            <!-- PHẦN CHỨA NÚT XÓA RIÊNG -->
-            <div class="border-t p-4 flex justify-end">
-                <form action="{% url 'delete_session' session.id %}" method="post"
+
+            <!-- Actions -->
+            {% if chat_sessions %}
+            <div class="flex items-center space-x-3">
+                <span class="text-sm text-gray-500 dark:text-gray-400">
+                    {{ chat_sessions|length }} cuộc hội thoại
+                </span>
+                <form action="{% url 'delete_all_history' %}" method="post" class="inline"
+                    onsubmit="return confirm('Bạn có chắc chắn muốn xóa TOÀN BỘ lịch sử không? Hành động này không thể hoàn tác.');">
+                    {% csrf_token %}
+                    <button type="submit"
+                        class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 dark:focus:ring-offset-gray-900 transition-colors duration-200">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                        </svg>
+                        Xóa tất cả
+                    </button>
+                </form>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Messages -->
+    {% if messages %}
+    <div class="mb-6 space-y-2">
+        {% for message in messages %}
+        <div class="p-4 rounded-lg border-l-4
+                    {% if message.tags == 'success' %}bg-green-50 border-green-400 text-green-800 dark:bg-green-900/20 dark:border-green-500 dark:text-green-400
+                    {% elif message.tags == 'error' %}bg-red-50 border-red-400 text-red-800 dark:bg-red-900/20 dark:border-red-500 dark:text-red-400
+                    {% else %}bg-blue-50 border-blue-400 text-blue-800 dark:bg-blue-900/20 dark:border-blue-500 dark:text-blue-400{% endif %}">
+            <div class="flex items-start">
+                <div class="flex-shrink-0 mr-3">
+                    {% if message.tags == 'success' %}
+                    <svg class="w-5 h-5 text-green-500 dark:text-green-400" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                    </svg>
+                    {% elif message.tags == 'error' %}
+                    <svg class="w-5 h-5 text-red-500 dark:text-red-400" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                    </svg>
+                    {% else %}
+                    <svg class="w-5 h-5 text-blue-500 dark:text-blue-400" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
+                    </svg>
+                    {% endif %}
+                </div>
+                <p class="text-sm font-medium">{{ message }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- Chat Sessions -->
+    {% if chat_sessions %}
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {% for session in chat_sessions %}
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 border border-gray-200 dark:border-gray-700 overflow-hidden group">
+            <!-- Card Header -->
+            <div class="p-6 pb-4">
+                <div class="flex items-start justify-between mb-3">
+                    <div class="flex items-center space-x-3">
+                        <div class="flex-shrink-0">
+                            <div class="w-10 h-10 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center">
+                                <svg class="w-5 h-5 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <h3 class="text-lg font-semibold text-gray-900 dark:text-white truncate">
+                                {{ session.title|default:"Cuộc hội thoại" }}
+                            </h3>
+                            <p class="text-sm text-gray-500 dark:text-gray-400">
+                                {{ session.start_time|date:"d/m/Y H:i" }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Last Message Preview -->
+                {% with last_message=session.contents.last %}
+                {% if last_message %}
+                <div class="space-y-2">
+                    <div class="flex items-start space-x-2">
+                        <div class="flex-shrink-0">
+                            <div class="w-6 h-6 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center">
+                                <svg class="w-3 h-3 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <p class="text-sm text-gray-600 dark:text-gray-300 line-clamp-2">
+                                {{ last_message.user_message|truncatewords:15 }}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-2">
+                        <div class="flex-shrink-0">
+                            <div class="w-6 h-6 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center">
+                                <svg class="w-3 h-3 text-blue-600 dark:text-blue-400" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M2 5a2 2 0 012-2h7a2 2 0 012 2v4a2 2 0 01-2 2H9l-3 3v-3H4a2 2 0 01-2-2V5z"></path>
+                                    <path d="M15 7v2a4 4 0 01-4 4H9.828l-1.766 1.767c.28.149.599.233.938.233h2l3 3v-3h2a2 2 0 002-2V9a2 2 0 00-2-2h-1z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <p class="text-sm text-gray-600 dark:text-gray-300 line-clamp-2">
+                                {{ last_message.ai_response|truncatewords:15 }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                {% else %}
+                <div class="text-center py-4">
+                    <p class="text-gray-500 dark:text-gray-400 text-sm italic">Chưa có tin nhắn nào</p>
+                </div>
+                {% endif %}
+                {% endwith %}
+            </div>
+
+            <!-- Card Footer -->
+            <div class="px-6 py-4 bg-gray-50 dark:bg-gray-750 border-t border-gray-200 dark:border-gray-700 flex items-center justify-between">
+                <a href="{% url 'session_detail' session.id %}"
+                   class="inline-flex items-center px-3 py-1.5 text-sm font-medium text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-colors duration-200">
+                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                    </svg>
+                    Xem chi tiết
+                </a>
+
+                <form action="{% url 'delete_session' session.id %}" method="post" class="inline"
                     onsubmit="return confirm('Bạn có chắc muốn xóa cuộc hội thoại này?');">
                     {% csrf_token %}
-                    <button type="submit" class="text-red-500 hover:text-red-700 text-sm font-medium">
+                    <button type="submit"
+                        class="inline-flex items-center px-3 py-1.5 text-sm font-medium text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 transition-colors duration-200">
+                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                        </svg>
                         Xóa
                     </button>
                 </form>
             </div>
         </div>
-    </a>
-    {% endfor %}
+        {% endfor %}
+    </div>
+
+    <!-- Pagination (if needed) -->
+    <div class="mt-8 flex justify-center">
+        <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px">
+            <!-- Add pagination if you have many sessions -->
+        </nav>
+    </div>
+
+    {% else %}
+    <!-- Empty State -->
+    <div class="text-center py-16">
+        <div class="mx-auto max-w-md">
+            <div class="mx-auto w-24 h-24 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center mb-6">
+                <svg class="w-12 h-12 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                </svg>
+            </div>
+            <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-2">Chưa có cuộc hội thoại nào</h3>
+            <p class="text-gray-600 dark:text-gray-400 mb-6">Bắt đầu cuộc hội thoại đầu tiên để sử dụng AI dự đoán địa điểm</p>
+            <a href="{% url 'index' %}"
+                class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-gray-900 transition-colors duration-200">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                </svg>
+                Bắt đầu chat ngay
+            </a>
+        </div>
+    </div>
+    {% endif %}
 </div>
-{% else %}
-<!-- Thông báo nếu chưa có lịch sử chat -->
-<div class="text-center py-16">
-    <p class="text-gray-500 text-lg">Bạn chưa có cuộc hội thoại nào.</p>
-    <a href="{% url 'index' %}"
-        class="mt-4 inline-block bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-600">
-        Bắt đầu Chat ngay
-    </a>
-</div>
-{% endif %}
-</div>
+
+<style>
+/* Custom styles for line-clamp */
+.line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* Custom dark mode background for card footer */
+.dark .bg-gray-750 {
+    background-color: #374151;
+}
+
+/* Smooth transitions for cards */
+.group:hover .group-hover\:scale-105 {
+    transform: scale(1.05);
+}
+</style>
 {% endblock %}
