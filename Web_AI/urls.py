@@ -12,4 +12,6 @@ urlpatterns = [
     path("signup/", views.signup, name='signup'),
     path("chat_history/", views.chat_history, name='chat_history'),
     path('history/<int:session_id>/', views.session_detail, name='session_detail'),
+    path('history/delete/<int:session_id>/', views.delete_session, name='delete_session'),
+    path('history/delete_all/', views.delete_all_history, name='delete_all_history'),
 ]

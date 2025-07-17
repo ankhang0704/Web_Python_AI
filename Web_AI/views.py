@@ -22,7 +22,7 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
-
+from django.contrib import messages
 
 
 from .ai_images import generate_caption, encode_image
@@ -298,3 +298,46 @@ def session_detail(request, session_id):
         # Django sẽ tự động ném ra lỗi 404 (trang không tồn tại).
         # Bạn cũng có thể chuyển hướng về trang lịch sử nếu muốn.
         return redirect('chat_history')
+
+@login_required
+@require_http_methods(["POST"]) # Chỉ cho phép xóa bằng phương thức POST để bảo mật
+def delete_session(request, session_id):
+    """
+    Xóa một phiên chat cụ thể.
+    """
+    try:
+        # Lấy đúng phiên chat của người dùng đang đăng nhập
+        session_to_delete = get_object_or_404(ChatSession, id=session_id, user=request.user)
+        session_to_delete.delete()
+        # Gửi một thông báo thành công về cho template
+        messages.success(request, 'Đã xóa cuộc hội thoại thành công!')
+    except Http404:
+        messages.error(request, 'Không tìm thấy cuộc hội thoại hoặc bạn không có quyền xóa.')
+    except Exception as e:
+        messages.error(request, f'Đã có lỗi xảy ra: {e}')
+
+    # Sau khi xóa, chuyển hướng người dùng về lại trang lịch sử
+    return redirect('chat_history')
+
+# ==========================================================
+#   VIEW MỚI: XÓA TOÀN BỘ LỊCH SỬ
+# ==========================================================
+@login_required
+@require_http_methods(["POST"])
+def delete_all_history(request):
+    """
+    Xóa toàn bộ lịch sử chat của người dùng hiện tại.
+    """
+    try:
+        # Tìm và xóa tất cả các phiên chat của người dùng
+        sessions = ChatSession.objects.filter(user=request.user)
+        count = sessions.count()
+        sessions.delete()
+        if count > 0:
+            messages.success(request, f'Đã xóa thành công toàn bộ {count} cuộc hội thoại!')
+        else:
+            messages.info(request, 'Không có lịch sử nào để xóa.')
+    except Exception as e:
+        messages.error(request, f'Đã có lỗi xảy ra khi xóa lịch sử: {e}')
+
+    return redirect('chat_history')
