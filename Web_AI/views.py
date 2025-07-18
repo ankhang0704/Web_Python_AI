@@ -261,18 +261,6 @@ def chat_session_detail(request, session_id):
     except ChatSession.DoesNotExist:
         return HttpResponse("Phiên chat không tồn tại.", status=404)
     
-# # trong views.py
-# @login_required
-# def session_detail(request, session_id):
-#     try:
-#         # Đảm bảo người dùng chỉ xem được session của chính họ
-#         session = ChatSession.objects.get(id=session_id, user=request.user)
-#         # Lấy tất cả tin nhắn trong session đó, sắp xếp theo thời gian
-#         messages = session.contents.all().order_by('timestamp')
-#         return render(request, 'Web_AI/session_detail.html', {'session': session, 'messages': messages})
-#     except ChatSession.DoesNotExist:
-#         from django.http import Http404
-#         raise Http404("Không tìm thấy phiên chat.")
     
 @login_required
 def session_detail(request, session_id):

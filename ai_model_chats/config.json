@@ -1,0 +1,10 @@
+{
+    "MODEL_SIZE": 128,
+    "NUM_LAYERS": 2,
+    "NUM_HEADS": 2,
+    "MAX_LEN_CAUHOI": 60,
+    "MAX_LEN_TRALOI": 120,
+    "BATCH_SIZE": 64,
+    "VOCAB_SIZE_INPUT": 1206,
+    "VOCAB_SIZE_OUTPUT": 2973
+}
