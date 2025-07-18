@@ -9,7 +9,6 @@ class ChatSession(models.Model):
 
     title = models.CharField(max_length=255, blank=True, null=True)
 
-
     def __str__(self):
         return f"Phiên chat của {self.user.username} lúc {self.start_time.strftime('%Y-%m-%d %H:%M')}"
 

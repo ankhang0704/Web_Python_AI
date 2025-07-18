@@ -12,22 +12,27 @@ from django.conf import settings
 from Web_AI.chatbot_model import Seq2SeqModel, Encoder, Decoder
 import numpy as np
 import tensorflow as tf
-
+import re
 # ...existing code...
 # ========================================================== 
 # PHẦN TẢI MÔ HÌNH THỰC TẾ
 # ==========================================================
 
 # Load config
-with open(os.path.join(settings.BASE_DIR, 'ai_model_chats', 'config.json')) as f:
-    config = json.load(f)
-
+try:
+    print("Đang tải config và token...")
+    with open(os.path.join(settings.BASE_DIR, 'ai_model_chats', 'config.json')) as f:
+        config = json.load(f)
 # Load tokenizers
-with open(os.path.join(settings.BASE_DIR, 'ai_model_chats', 'cauhoi_tokenizer.pkl'), 'rb') as f:
-    tokenizer_input = pickle.load(f)
+    with open(os.path.join(settings.BASE_DIR, 'ai_model_chats', 'cauhoi_tokenizer.pkl'), 'rb') as f:
+        tokenizer_input = pickle.load(f)
 
-with open(os.path.join(settings.BASE_DIR, 'ai_model_chats', 'traloi_tokenizer.pkl'), 'rb') as f:
-    tokenizer_output = pickle.load(f)
+    with open(os.path.join(settings.BASE_DIR, 'ai_model_chats', 'traloi_tokenizer.pkl'), 'rb') as f:
+        tokenizer_output = pickle.load(f)
+    print("Đã tải thành công.")
+except Exception as e:
+    print(f"Lỗi khi tải config và token: {e}")
+
 
 
 def create_positional_embedding(max_len, model_size):
@@ -62,13 +67,19 @@ dummy_input = tf.zeros((1, config["MAX_LEN_CAUHOI"]), dtype=tf.int32)
 dummy_decoder = tf.zeros((1, 1), dtype=tf.int32)
 _ = model(dummy_input, dummy_decoder)
 
-encoder.load_weights(os.path.join(settings.BASE_DIR, 'ai_model_chats', 'encoder_weights.weights.h5'))
-decoder.load_weights(os.path.join(settings.BASE_DIR, 'ai_model_chats', 'decoder_weights.weights.h5'))
+try:
+    encoder.load_weights(os.path.join(settings.BASE_DIR, 'ai_model_chats', 'encoder_weights.weights.h5'))
+    decoder.load_weights(os.path.join(settings.BASE_DIR, 'ai_model_chats', 'decoder_weights.weights.h5'))
+    print("Đã tải trọng số thành công.")
+except Exception as e:
+    print(f"Lỗi khi tải trọng số mô hình: {e}")
 # ==========================================================
 # PHẦN DỰ ĐOÁN TRẢ LỜI
 # ==========================================================
 
 def predict(user_input: str, max_len=40) -> str:
+
+    user_input = normalize_input(user_input)
     seq = tokenizer_input.texts_to_sequences([user_input])
     padded_input = tf.keras.preprocessing.sequence.pad_sequences(
         seq, maxlen=config["MAX_LEN_CAUHOI"], padding='post'
@@ -91,3 +102,15 @@ def predict(user_input: str, max_len=40) -> str:
     return ' '.join(output_words) if output_words else "Xin lỗi, tôi chưa có câu trả lời phù hợp."
 
 
+def normalize_input(text: str) -> str:
+
+    text = text.strip()
+
+    # Loại bỏ khoảng trắng trước dấu chấm hỏi
+    text = re.sub(r'\s+\?', '?', text)
+
+    # Nếu chưa có dấu câu kết thúc (., ?, !), thì thêm '?'
+    if not re.search(r'[.?!]$', text):
+        text += '?'
+
+    return text

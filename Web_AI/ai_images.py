@@ -9,19 +9,24 @@ import numpy as np
 from PIL import Image
 
 
+try:
+    print("Đang tải mô hình dự đoán hình ảnh")
+    model_path = os.path.join(settings.BASE_DIR, 'model', 'model_v2.keras')
+    model = load_model(model_path)
 
+    cnn_model = InceptionV3(weights='imagenet')
+    cnn_model_new = Model(cnn_model.input, cnn_model.layers[-2].output)
+
+    wordtoix = load(open(os.path.join(settings.BASE_DIR, 'model', 'wordtoix.pkl'), 'rb'))
+    ixtoword = load(open(os.path.join(settings.BASE_DIR, 'model', 'ixtoword.pkl'), 'rb'))
+
+    max_length = 35   # đặt đúng với max_length bạn đã dùng
+    print("Đã tải mô hình dự đoán hình ảnh.")
+except Exception as e:
+    print(f"Lỗi khi tải mô hình dự đoán hình ảnh: {e}")
 
 # Load model 1 lần
-model_path = os.path.join(settings.BASE_DIR, 'model', 'model_v2.keras')
-model = load_model(model_path)
 
-cnn_model = InceptionV3(weights='imagenet')
-cnn_model_new = Model(cnn_model.input, cnn_model.layers[-2].output)
-
-wordtoix = load(open(os.path.join(settings.BASE_DIR, 'model', 'wordtoix.pkl'), 'rb'))
-ixtoword = load(open(os.path.join(settings.BASE_DIR, 'model', 'ixtoword.pkl'), 'rb'))
-
-max_length = 35   # đặt đúng với max_length bạn đã dùng
 
 def preprocess_image(img_path):
     img = image.load_img(img_path, target_size=(299, 299))
