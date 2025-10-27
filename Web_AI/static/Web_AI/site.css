@@ -2,6 +2,7 @@
     font-weight: 600;
     color: blue;
 }
+
 .navbar {
     background-color: lightslategray;
     font-size: 1em;
@@ -27,5 +28,5 @@
 
 .body-content {
     padding: 5px;
-    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }

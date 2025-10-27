@@ -19,8 +19,8 @@ try:
 
     wordtoix = load(open(os.path.join(settings.BASE_DIR, 'model', 'wordtoix.pkl'), 'rb'))
     ixtoword = load(open(os.path.join(settings.BASE_DIR, 'model', 'ixtoword.pkl'), 'rb'))
-
-    max_length = 35   # đặt đúng với max_length bạn đã dùng
+    max_length = 35  # Thay vì tải từ file, đặt trực tiếp giá trị max_length
+    # max_length = load(open(os.path.join(settings.BASE_DIR, 'model', 'max_length.pkl'), 'rb'))
     print("Đã tải mô hình dự đoán hình ảnh.")
 except Exception as e:
     print(f"Lỗi khi tải mô hình dự đoán hình ảnh: {e}")
